@@ -2,18 +2,32 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    CharacterController controller;
-    public Animator anim;
+    Rigidbody rb;
 
-    public float speed;
+    [Header("Player Variables")]
+    public float speed;                     // player movement speed
     public float turnSmooth = 0.1f;
+    public float height;
+    public float rotationSpeed;             // the speed at which players body rotates
+
+    public float drag;                      // if unset the player will slide uncontrollably
+
     float turnSmoothVelocity;
 
-    public Transform cam;
+    [Header("Other stuff")]
+    public Animator anim;
+    public Transform cam;                   // set the player camera and not Cinemachine camera
+    public Transform orientation;           // orientation object
+
+    bool isGrounded = true;
     
+    float horizontal;
+    float vertical;
+
     void Start()
     {
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;           // if unset the player will either fall or violently rotate
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -21,12 +35,27 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!controller.isGrounded) {
-            controller.Move(Vector3.down * 9.81f * Time.deltaTime);
+        if (Physics.Raycast(transform.position, Vector3.down, height)) {
+            isGrounded = true;
+        } else { isGrounded = false; }
+
+        if(isGrounded) {
+            rb.linearDamping = drag;        // apply player drag
+        } else {
+            rb.linearDamping = 0;           // if player is in air, disable drag
         }
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        speedControl();
+    }
+
+    private void FixedUpdate() {
+        movePlayer();
+    }
+
+    void movePlayer() {
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
 
         if(direction.magnitude >= 0.1f) {
@@ -35,11 +64,23 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir * speed * Time.deltaTime);
+
+            rb.AddForce(moveDir * speed * 2.5f, ForceMode.Force);
+
             anim.SetBool("isWalking", true);
         }
         else {
             anim.SetBool("isWalking", false);
+        }
+    }
+
+    void speedControl() {
+        Vector3 vel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+        // If player velocity exceeds the target speed we need to change the velocity to the target speed.
+        if(vel.magnitude > speed) {
+            Vector3 targetVel = vel.normalized * speed;
+            rb.linearVelocity = new Vector3(targetVel.x, rb.linearVelocity.y, targetVel.z);
         }
     }
 }
