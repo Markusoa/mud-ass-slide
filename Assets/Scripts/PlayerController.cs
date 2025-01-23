@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     public float drag;                      // if unset the player will slide uncontrollably
 
+    Sliding slide;
+
     float turnSmoothVelocity;
 
     [Header("Other stuff")]
@@ -28,6 +30,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;           // if unset the player will either fall or violently rotate
+
+        slide = GetComponent<Sliding>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -61,6 +65,7 @@ public class PlayerController : MonoBehaviour
         if(direction.magnitude >= 0.1f) {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmooth);
+
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;

@@ -27,6 +27,7 @@ public class FunnyMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = false;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

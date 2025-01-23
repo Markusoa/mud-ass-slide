@@ -448,7 +448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScanRecursively: 1
   SuppressInputWhileBlending: 1
-  IgnoreTimeScale: 0
+  IgnoreTimeScale: 1
   m_ControllerManager:
     Controllers:
     - Name: Look Orbit X
@@ -559,7 +559,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457992302}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0000000011722217, y: -0.98836166, z: 0.15212297, w: 0.000000003392336}
+  m_LocalRotation: {x: 8.6374696e-10, y: -0.9932574, z: 0.11593014, w: 0.0000000074003452}
   m_LocalPosition: {x: 0, y: 3.0070496, z: 9.53717}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -588,7 +588,7 @@ MonoBehaviour:
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0, y: 0.75, z: 0}
   Damping: {x: 0.5, y: 0.5}
   Lookahead:
     Enabled: 0
@@ -641,7 +641,7 @@ MonoBehaviour:
   VerticalAxis:
     Value: 17.5
     Center: 17.5
-    Range: {x: -10, y: 45}
+    Range: {x: -10, y: 75}
     Wrap: 0
     Recentering:
       Enabled: 0
@@ -822,7 +822,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805847582}
   serializedVersion: 2
-  m_LocalRotation: {x: 5.0635496e-10, y: -0.9883616, z: 0.15212299, w: 0.00000000328985}
+  m_LocalRotation: {x: 8.637471e-10, y: -0.9932574, z: 0.11593014, w: 0.0000000074003457}
   m_LocalPosition: {x: 0, y: 3.0070496, z: 9.53717}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -874,6 +874,7 @@ GameObject:
   - component: {fileID: 2027994380}
   - component: {fileID: 2027994376}
   - component: {fileID: 2027994378}
+  - component: {fileID: 2027994381}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -890,7 +891,7 @@ Transform:
   m_GameObject: {fileID: 2027994374}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 609.7, y: 289.1, z: 478.9}
+  m_LocalPosition: {x: 609.7, y: 295.58, z: 444.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -931,15 +932,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8d037d97406595796de7c7488c494d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slide:
-    m_Name: Slide
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: dddefb33-0b7c-4697-803f-5854d0b7ac06
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  orientation: {fileID: 915529041}
+  slideForce: 300
+  sliding: 0
 --- !u!54 &2027994379
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -965,7 +960,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!136 &2027994380
 CapsuleCollider:
@@ -990,6 +985,27 @@ CapsuleCollider:
   m_Height: 1.45
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!114 &2027994381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027994374}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be958a6506ad50655800c0d5af732d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 6
+  turnSmooth: 0.1
+  height: 1.45
+  rotationSpeed: 5
+  player: {fileID: 2027994375}
+  playerObj: {fileID: 1654472698}
+  anim: {fileID: 919132147570259866}
+  cam: {fileID: 1805847586}
+  orientation: {fileID: 915529041}
 --- !u!4 &228806788606788429
 Transform:
   m_ObjectHideFlags: 0

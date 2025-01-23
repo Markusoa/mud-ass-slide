@@ -1,41 +1,46 @@
-using System;
-using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class Sliding : MonoBehaviour
 {
-    InputAction slide;
-
+    [Header("Player stuff")]
     Rigidbody rb;
+    public Transform orientation;
 
-    bool sliding = false;
+    [Header("Sliding")]
+    public float slideForce;
+    public bool sliding = false;
 
     void Start() {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+    }
 
-        slide = new InputAction(
-            type: InputActionType.Button,
-            binding: "<Keyboard>/space",
-            interactions: "press(behavior=1)"
-        );
-        slide = new InputAction(
-            type: InputActionType.Button,
-            binding: "<Gamepad>/buttonSouth"
-        );
-
-        slide.Enable();
+    void FixedUpdate() {
+        if(sliding) { slide(); }
     }
 
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            sliding = true;
+        }
     }
 
-    public void startSlide() {
+    public void slide() {
         sliding = true;
+
+        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        slidingMovement();
+    }
+
+    void slidingMovement() {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        Vector3 inputDirection = orientation.forward * vertical + orientation.right * horizontal;
+
+        rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
     }
 
 }
