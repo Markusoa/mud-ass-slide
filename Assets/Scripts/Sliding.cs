@@ -40,7 +40,7 @@ public class Sliding : MonoBehaviour
 
         Vector3 inputDirection = orientation.forward * vertical + orientation.right * horizontal;
 
-        rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
+        rb.AddForce(orientation.forward * slideForce, ForceMode.Force);
     }
 
 }
