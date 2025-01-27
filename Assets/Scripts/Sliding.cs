@@ -6,6 +6,7 @@ public class Sliding : MonoBehaviour
     [Header("Player stuff")]
     Rigidbody rb;
     public Transform orientation;
+    public Animator anim;
 
     [Header("Sliding")]
     public float slideForce;
@@ -17,7 +18,11 @@ public class Sliding : MonoBehaviour
     }
 
     void FixedUpdate() {
-        if(sliding) { slide(); }
+        if(sliding) { 
+            slide();
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isSliding", true);
+        }
     }
 
     void Update()
