@@ -538,6 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientation: {fileID: 8377552766688925527}
+  anim: {fileID: 0}
   slideForce: 300
   sliding: 0
 --- !u!114 &5871789198015689662
@@ -1244,13 +1245,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8724812151402587436}
   serializedVersion: 2
-  m_LocalRotation: {x: -2.310652e-10, y: -0.9932574, z: 0.11593012, w: -0.0000000019797892}
+  m_LocalRotation: {x: 0.0000000034549876, y: -0.9932574, z: 0.11593013, w: 0.000000029601381}
   m_LocalPosition: {x: 0, y: 3.0070496, z: 9.53717}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6540179765676084522}
-  m_LocalEulerAnglesHint: {x: 10.442, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: -180, z: 0}
 --- !u!114 &3701699798390665880
 MonoBehaviour:
   m_ObjectHideFlags: 0
