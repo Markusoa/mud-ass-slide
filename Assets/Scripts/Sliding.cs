@@ -1,51 +1,53 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Sliding : MonoBehaviour
 {
-    [Header("Player stuff")]
     Rigidbody rb;
-    public Transform orientation;
-    public Animator anim;
+    private PlayerController pc;
 
     [Header("Sliding")]
     public float slideForce;
     public bool sliding = false;
 
+    float horizontal;
+    float vertical;
+
     void Start() {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        pc = GetComponent<PlayerController>();
     }
 
     void FixedUpdate() {
         if(sliding) { 
-            slide();
-            anim.SetBool("isWalking", false);
-            anim.SetBool("isSliding", true);
+            slidingMovement();
         }
+        pc.anim.SetBool("isWalking", !sliding);
+        pc.anim.SetBool("isSliding", sliding);
     }
 
-    void Update()
-    {
+    void Update() {
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+
         if(Input.GetKeyDown(KeyCode.Space)) {
             sliding = true;
         }
     }
 
-    public void slide() {
+    void slidingMovement() {
+        // Vector3 inputDirection = pc.orientation.forward * vertical + pc.orientation.right * horizontal;
+
         sliding = true;
 
-        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        slidingMovement();
+        rb.AddForce(Vector3.down * 1.25f, ForceMode.Impulse);
+        rb.AddForce(pc.GetSlopeMoveDirection(pc.orientation.forward) * slideForce, ForceMode.Force);
+        
     }
 
-    void slidingMovement() {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-
-        Vector3 inputDirection = orientation.forward * vertical + orientation.right * horizontal;
-
-        rb.AddForce(orientation.forward * slideForce, ForceMode.Force);
+    private void OnTriggerEnter(Collider collider) {
+        sliding = false;
     }
-
 }
