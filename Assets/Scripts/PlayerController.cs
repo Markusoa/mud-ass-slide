@@ -13,9 +13,6 @@ public class PlayerController : MonoBehaviour
     public float height;
     public float rotationSpeed;             // the speed at which players body rotates
 
-    public float jumpForce = 5.0f;
-    private Vector3 jumpDir;
-
     public float drag;                      // if unset the player will slide uncontrollably
 
     public float speedIncreaseMultiplier;   // overtime speed increase multiplier
@@ -27,6 +24,11 @@ public class PlayerController : MonoBehaviour
     Sliding slide;
 
     float turnSmoothVelocity;
+
+    [Header("Jumping")]
+    public float jumpForce = 5.0f;
+    private bool readyToJump = true;
+    public float jumpCooldown;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
@@ -60,8 +62,6 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        jumpDir = new Vector3(0.0f, 30.0f, 0.0f);
     }
 
     void Update()
@@ -74,6 +74,11 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = drag;        // apply player drag
         } else {
             rb.linearDamping = 0;           // if player is in air, disable drag
+        }
+
+        if(speed < 2f) {
+            state = MovementState.walking;
+            slide.sliding = false;
         }
 
         playerInput();
@@ -92,8 +97,11 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
-        if(Input.GetKeyDown(KeyCode.Space) && state == MovementState.sliding && isGrounded) {
-            rb.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
+        if(Input.GetKeyDown(KeyCode.Space) && state == MovementState.sliding && isGrounded && readyToJump) {
+            readyToJump = false;
+            jump();
+
+            Invoke(nameof(resetJump), jumpCooldown);
         }
 
     }
@@ -155,17 +163,14 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-            if(isGrounded)
-                rb.AddForce(moveDir * speed * 2.5f, ForceMode.Force);
-            else
-                rb.AddForce(moveDir * speed * 2.5f, ForceMode.Force);
+            rb.AddForce(moveDir * speed * 2.5f, ForceMode.Force);
 
             anim.SetBool("isWalking", true);
 
             float singleStep = speed * Time.deltaTime;
 
             // Rotate the forward vector towards the target direction by one step
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, GetSlopeMoveDirection(moveDir), singleStep, 0.0f);
+            Vector3 newDirection = Vector3.RotateTowards(orientation.forward, GetSlopeMoveDirection(moveDir), singleStep, 2.0f);
             transform.rotation = Quaternion.LookRotation(newDirection);
         }
         else {
@@ -192,6 +197,18 @@ public class PlayerController : MonoBehaviour
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
+    }
+
+    private void jump() {
+        exitingSlope = true;
+
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+
+    private void resetJump() {
+        exitingSlope = false;
+        readyToJump = true;
     }
 
     public bool OnSlope() {
