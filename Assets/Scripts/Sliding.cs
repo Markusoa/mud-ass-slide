@@ -13,6 +13,9 @@ public class Sliding : MonoBehaviour
     float horizontal;
     float vertical;
 
+    float currentSlope;
+    float lastSlope;
+
     void Start() {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -42,7 +45,22 @@ public class Sliding : MonoBehaviour
 
         sliding = true;
 
-        rb.AddForce(Vector3.down * 1.5f, ForceMode.Impulse);
+        if(pc.OnSlope()) {
+            if(pc.isGrounded) {
+                currentSlope = Vector3.Angle(Vector3.up, pc.slopeHit.normal);
+                lastSlope = currentSlope;
+            }
+
+            if(lastSlope > 55.0f) {
+                rb.AddForce(Vector3.down * lastSlope/8, ForceMode.Impulse);     // When the player comes across a very large slope we need to apply more gravity
+                                                                                // for the player to stay on the ground and not start flying/jumping in air.
+            } else if(lastSlope < 55.0f) {
+                rb.AddForce(Vector3.down * 1.5f, ForceMode.Impulse);            // otherwise apply normal gravity
+            }
+        } else {
+            rb.AddForce(Vector3.down * 1.5f, ForceMode.Impulse);                // should not be needed as the player is always on a slope while sliding, but
+                                                                                // just in case this isn't the situation we still want to apply gravity to the player.
+        }
         // rb.AddForce(pc.GetSlopeMoveDirection(pc.orientation.forward) * slideForce, ForceMode.Force);
     }
 
