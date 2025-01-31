@@ -42,9 +42,8 @@ public class Sliding : MonoBehaviour
 
         sliding = true;
 
-        rb.AddForce(Vector3.down * 1.25f, ForceMode.Impulse);
-        rb.AddForce(pc.GetSlopeMoveDirection(pc.orientation.forward) * slideForce, ForceMode.Force);
-        
+        rb.AddForce(Vector3.down * 1.5f, ForceMode.Impulse);
+        // rb.AddForce(pc.GetSlopeMoveDirection(pc.orientation.forward) * slideForce, ForceMode.Force);
     }
 
     private void OnTriggerEnter(Collider collider) {
