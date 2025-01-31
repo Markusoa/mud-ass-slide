@@ -40,6 +40,13 @@ public class PlayerController : MonoBehaviour
     float horizontal;
     float vertical;
 
+    public MovementState state;
+    public enum MovementState {
+        walking,
+        sliding,
+        air
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -63,23 +70,7 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = 0;           // if player is in air, disable drag
         }
 
-        if(slide.sliding) {
-            if(OnSlope() && rb.linearVelocity.y < 0.1f) {
-                desiredMoveSpeed = slideSpeed;
-            }
-            else {
-                desiredMoveSpeed = speed;
-            }
-            if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 2f) {
-                StopAllCoroutines();
-                StartCoroutine(SmoothlyLerpMoveSpeed());
-            }
-            else {
-                speed = desiredMoveSpeed;
-            }
-        } else {
-            speed = desiredMoveSpeed;
-        }
+        StateHandler();
 
         lastDesiredMoveSpeed = desiredMoveSpeed;
         rb.useGravity = !slide.sliding;     // if sliding disable gravity
@@ -89,6 +80,26 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() {
         movePlayer();
+    }
+
+    private void StateHandler() {
+        if(slide.sliding) {                 // mode = sliding
+            state = MovementState.sliding;
+            
+            if(OnSlope() && rb.linearVelocity.y < 0.2f) {
+                desiredMoveSpeed = slideSpeed;
+            } else { desiredMoveSpeed = walkSpeed; }
+        }
+
+        else if(isGrounded) {               // assume that mode = walking unless sliding
+            state = MovementState.walking;
+            desiredMoveSpeed = walkSpeed;
+        }
+
+        if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f) {
+            StopAllCoroutines();
+            StartCoroutine(SmoothlyLerpMoveSpeed());
+        } else { speed = desiredMoveSpeed; }
     }
 
     private IEnumerator SmoothlyLerpMoveSpeed()

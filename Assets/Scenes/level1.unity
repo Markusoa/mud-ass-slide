@@ -265,7 +265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6970230245468086730, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: slideSpeed
-      value: 30
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6970230245468086730, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: sprintSpeed
@@ -722,7 +722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4818f394c426ed218824db9bae87d42c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slide: {fileID: 0}
 --- !u!95 &2056010382891143568 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2056010382314200562, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
