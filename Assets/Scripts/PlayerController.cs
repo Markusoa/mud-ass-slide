@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
-    private RaycastHit slopeHit;
+    [HideInInspector] public RaycastHit slopeHit;
     private bool exitingSlope;
 
     [Header("Other stuff")]
@@ -41,7 +41,8 @@ public class PlayerController : MonoBehaviour
     public Transform orientation;           // orientation object
     public Transform rotationTarget;
 
-    bool isGrounded = true;
+    [HideInInspector]
+    public bool isGrounded = true;
     
     float horizontal;
     float vertical;
@@ -110,8 +111,10 @@ public class PlayerController : MonoBehaviour
         if(slide.sliding) {                 // mode = sliding
             state = MovementState.sliding;
             
-            if(OnSlope() && rb.linearVelocity.y < 0.2f) {
-                desiredMoveSpeed = slideSpeed;
+            if(OnSlope()) {
+                if(rb.linearVelocity.y < 0.2f)
+                    desiredMoveSpeed = slideSpeed;
+
             } else { desiredMoveSpeed = walkSpeed; }
         }
 
