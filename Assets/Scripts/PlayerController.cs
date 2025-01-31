@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     public float height;
     public float rotationSpeed;             // the speed at which players body rotates
 
+    public float jumpForce = 5.0f;
+    private Vector3 jumpDir;
+
     public float drag;                      // if unset the player will slide uncontrollably
 
     public float speedIncreaseMultiplier;   // overtime speed increase multiplier
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     public Transform cam;                   // set the player camera and not Cinemachine camera
     public Transform orientation;           // orientation object
+    public Transform rotationTarget;
 
     bool isGrounded = true;
     
@@ -56,6 +60,8 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        jumpDir = new Vector3(0.0f, 30.0f, 0.0f);
     }
 
     void Update()
@@ -70,19 +76,29 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = 0;           // if player is in air, disable drag
         }
 
-        StateHandler();
+        playerInput();
+        speedControl();
+        stateHandler();
 
         lastDesiredMoveSpeed = desiredMoveSpeed;
         rb.useGravity = !slide.sliding;     // if sliding disable gravity
-
-        speedControl();
     }
 
     private void FixedUpdate() {
         movePlayer();
     }
 
-    private void StateHandler() {
+    private void playerInput() {
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+
+        if(Input.GetKeyDown(KeyCode.Space) && state == MovementState.sliding && isGrounded) {
+            rb.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
+        }
+
+    }
+
+    private void stateHandler() {
         if(slide.sliding) {                 // mode = sliding
             state = MovementState.sliding;
             
@@ -130,9 +146,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void movePlayer() {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
-
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
 
         if(direction.magnitude >= 0.1f) {
@@ -142,9 +155,18 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-            rb.AddForce(moveDir * speed * 2.5f, ForceMode.Force);
+            if(isGrounded)
+                rb.AddForce(moveDir * speed * 2.5f, ForceMode.Force);
+            else
+                rb.AddForce(moveDir * speed * 2.5f, ForceMode.Force);
 
             anim.SetBool("isWalking", true);
+
+            float singleStep = speed * Time.deltaTime;
+
+            // Rotate the forward vector towards the target direction by one step
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, GetSlopeMoveDirection(moveDir), singleStep, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDirection);
         }
         else {
             anim.SetBool("isWalking", false);
@@ -152,14 +174,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void speedControl() {
-        Vector3 vel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
-        // // If player velocity exceeds the target speed we need to change the velocity to the target speed.
-        // if(vel.magnitude > speed) {
-        //     Vector3 targetVel = vel.normalized * speed;
-        //     rb.linearVelocity = new Vector3(targetVel.x, rb.linearVelocity.y, targetVel.z);
-        // }
-
         // limiting speed on slope
         if (OnSlope() && !exitingSlope)
         {

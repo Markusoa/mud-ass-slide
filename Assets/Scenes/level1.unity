@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 23002981675cee84bbbebf0794b85ea2, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -137,27 +137,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1140166153071013521, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.1259766
+      value: 3.00708
       objectReference: {fileID: 0}
     - target: {fileID: 1140166153071013521, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.53717
+      value: -9.537109
       objectReference: {fileID: 0}
     - target: {fileID: 1140166153071013521, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98556644
+      value: 0.9932571
       objectReference: {fileID: 0}
     - target: {fileID: 1140166153071013521, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.16928923
+      value: 0.11593234
       objectReference: {fileID: 0}
     - target: {fileID: 1140166153071013521, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000003449535
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1140166153071013521, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 5.92521e-10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1140166153071013521, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -173,19 +173,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1553986956982467588, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98556644
+      value: 0.99325716
       objectReference: {fileID: 0}
     - target: {fileID: 1553986956982467588, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.16928925
+      value: 0.11593234
       objectReference: {fileID: 0}
     - target: {fileID: 1553986956982467588, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000031216478
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1553986956982467588, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -5.3620075e-10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1553986956982467588, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -202,6 +202,10 @@ PrefabInstance:
     - target: {fileID: 3172262964418442562, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_ImplicitTensor
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132165421424454678, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
+      propertyPath: far clip plane
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 5571704602380001270, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_Name
@@ -269,7 +273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6970230245468086730, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: slideSpeed
-      value: 15
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6970230245468086730, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: sprintSpeed
@@ -283,6 +287,10 @@ PrefabInstance:
       propertyPath: maxSlopeAngle
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 6970230245468086730, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
+      propertyPath: rotationTarget
+      value: 
+      objectReference: {fileID: 1591841398}
     - target: {fileID: 6970230245468086730, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: whatIsGround.m_Bits
       value: 4294967295
@@ -375,7 +383,7 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
-  m_EnableHeightmapRayTracing: 1
+  m_EnableHeightmapRayTracing: 0
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
 --- !u!4 &1053116142
