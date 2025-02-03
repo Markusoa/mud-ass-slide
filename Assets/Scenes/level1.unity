@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  m_FogColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
   m_FogMode: 2
-  m_FogDensity: 0.002
+  m_FogDensity: 0.005
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -729,7 +729,7 @@ Terrain:
   m_DetailObjectDistance: 80
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
-  m_SplatMapDistance: 8000
+  m_SplatMapDistance: 9000
   m_HeightmapMinimumLODSimplification: 0
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 1
@@ -964,7 +964,7 @@ GameObject:
   - component: {fileID: 1053116142}
   - component: {fileID: 1053116141}
   - component: {fileID: 1053116140}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,8 +984,8 @@ TerrainCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
+    m_Bits: 64
+  m_LayerOverridePriority: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1001,14 +1001,14 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 6a1f4d53861bd754498404d0d019ae89, type: 2}
-  m_TreeDistance: 5000
+  m_TreeDistance: 4500
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 80
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1750
+  m_SplatMapDistance: 3000
   m_HeightmapMinimumLODSimplification: 0
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
@@ -1020,7 +1020,7 @@ Terrain:
   m_ReflectionProbeUsage: 1
   m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
   m_BakeLightProbesForTrees: 1
-  m_PreserveTreePrototypeLayers: 0
+  m_PreserveTreePrototypeLayers: 1
   m_DeringLightProbesForTrees: 1
   m_ReceiveGI: 1
   m_ScaleInLightmap: 0.0256
