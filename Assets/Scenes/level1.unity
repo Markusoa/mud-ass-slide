@@ -601,6 +601,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.000005287712
       objectReference: {fileID: 0}
+    - target: {fileID: 8035409212150609270, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308142916000929400, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
+      propertyPath: Decollision.ObstacleLayers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 8308142916000929400, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
+      propertyPath: TerrainResolution.TerrainLayers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 8525124704078473548, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 85.22603
@@ -632,6 +644,10 @@ PrefabInstance:
     - target: {fileID: 8568348988798548642, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 79.29455
+      objectReference: {fileID: 0}
+    - target: {fileID: 8724812151402587436, guid: 644bb4fdcc82cf044875bbbca01e8ba8, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
